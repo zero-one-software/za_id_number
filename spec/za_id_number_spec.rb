@@ -24,6 +24,11 @@ describe ZAIDNumber do
       expect(described_class.new("a#{valid_za_id}a")).to_not have_only_digits
     end
 
+    it "should only allow ID numbers with valid dates" do
+      expect(subject).to                                  have_valid_date
+      expect(described_class.new("7513331234083")).to_not have_valid_date
+    end
+
     it "should detect valid ZA ID number checksums" do
       expect(subject).to have_valid_checksum
     end
@@ -42,7 +47,14 @@ describe ZAIDNumber do
 
       expect(described_class.new("123456789015")).to_not  be_valid # all digits and has correct checksum, but too short
       expect(described_class.new("1234567A89012")).to_not be_valid # not all digits, but correct length
+      expect(described_class.new("7513331234083")).to_not be_valid # all good, except date is bad.
       expect(described_class.new(invalid_za_id)).to_not   be_valid # all digits, and correct length, but bad checksum
+    end
+  end
+
+  context "date parsing" do
+    it "should extract a date of birth" do
+      expect(subject.date_of_birth).to eq Date.parse('1975-01-15')
     end
   end
 end

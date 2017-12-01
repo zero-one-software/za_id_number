@@ -13,6 +13,7 @@ class ZAIDNumber
   def valid?
     has_valid_length? &&
     has_only_digits?  &&
+    has_valid_date?   &&
     has_valid_checksum?
   end
 
@@ -26,5 +27,15 @@ class ZAIDNumber
 
   def has_only_digits?
     @id_number.to_s.gsub(/\D*/, '') == @id_number.to_s
+  end
+
+  def has_valid_date?
+    true if date_of_birth
+  rescue ArgumentError
+    false
+  end
+
+  def date_of_birth
+    Date.parse("#{@id_number[0..1]}-#{@id_number[2..3]}-#{@id_number[4..5]}")
   end
 end
