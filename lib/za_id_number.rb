@@ -36,9 +36,7 @@ class ZAIDNumber
   end
 
   def has_valid_date?
-    true if date_of_birth
-  rescue ArgumentError
-    false
+    date_of_birth ? true : false
   end
 
   def has_valid_citizenship?
@@ -47,6 +45,8 @@ class ZAIDNumber
 
   def date_of_birth
     Date.parse("#{@id_number[0..1]}-#{@id_number[2..3]}-#{@id_number[4..5]}")
+  rescue ArgumentError
+    false
   end
 
   def gender
