@@ -46,7 +46,7 @@ class ZAIDNumber
   def date_of_birth
     Date.parse("#{@id_number[0..1]}-#{@id_number[2..3]}-#{@id_number[4..5]}")
   rescue ArgumentError
-    false
+    nil
   end
 
   def gender
