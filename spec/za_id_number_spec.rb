@@ -29,6 +29,11 @@ describe ZAIDNumber do
       expect(described_class.new("7513331234083")).to_not have_valid_date
     end
 
+    it "should only allow valid citizenship values" do
+      expect(subject).to                                  have_valid_citizenship
+      expect(described_class.new("7501151234283")).to_not have_valid_citizenship
+    end
+
     it "should detect valid ZA ID number checksums" do
       expect(subject).to have_valid_checksum
     end
@@ -42,12 +47,13 @@ describe ZAIDNumber do
       expect(described_class.new(invalid_za_id)).to_not have_valid_checksum
     end
 
-    it "should ensure ID numbers are only 13 digit numbers with valid checksums" do
+    it "should ensure ID numbers are only 13 digit numbers with completely valid data embedded" do
       expect(subject).to be_valid
 
       expect(described_class.new("123456789015")).to_not  be_valid # all digits and has correct checksum, but too short
       expect(described_class.new("1234567A89012")).to_not be_valid # not all digits, but correct length
       expect(described_class.new("7513331234083")).to_not be_valid # all good, except date is bad.
+      expect(described_class.new("7501151234283")).to_not be_valid # all good, citizenship is bad
       expect(described_class.new(invalid_za_id)).to_not   be_valid # all digits, and correct length, but bad checksum
     end
   end
@@ -70,6 +76,21 @@ describe ZAIDNumber do
     it "should detect females" do
       expect(female_id).to        be_female
       expect(female_id.gender).to eq :f
+    end
+  end
+
+  context "citizenship parsing" do
+    let(:za_citizen)         { described_class.new 7501151234085.to_s }
+    let(:permanent_resident) { described_class.new 7501151234184.to_s }
+
+    it "should detect ZA citizens" do
+      expect(za_citizen).to             be_za_citizen
+      expect(za_citizen.citizenship).to eq :za_citizen
+    end
+
+    it "should detect permanent residents" do
+      expect(permanent_resident).to             be_permanent_resident
+      expect(permanent_resident.citizenship).to eq :permanent_resident
     end
   end
 end
