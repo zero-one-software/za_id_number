@@ -3,6 +3,7 @@ require 'luhn'
 
 class ZAIDNumber
   REQUIRED_ID_LENGTH = 13
+  FEMALE_RANGE       = (0..4999)
 
   attr_reader :id_number
 
@@ -37,5 +38,17 @@ class ZAIDNumber
 
   def date_of_birth
     Date.parse("#{@id_number[0..1]}-#{@id_number[2..3]}-#{@id_number[4..5]}")
+  end
+
+  def gender
+    female? ? :f : :m
+  end
+
+  def female?
+    FEMALE_RANGE.include? @id_number[6..9].to_i
+  end
+
+  def male?
+    !female?
   end
 end

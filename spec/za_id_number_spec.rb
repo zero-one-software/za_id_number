@@ -57,4 +57,19 @@ describe ZAIDNumber do
       expect(subject.date_of_birth).to eq Date.parse('1975-01-15')
     end
   end
+
+  context "gender parsing" do
+    let(:female_id) { described_class.new 7501151234085.to_s }
+    let(:male_id)   { described_class.new 7501156000085.to_s }
+
+    it "should detect males" do
+      expect(male_id).to        be_male
+      expect(male_id.gender).to eq :m
+    end
+
+    it "should detect females" do
+      expect(female_id).to        be_female
+      expect(female_id.gender).to eq :f
+    end
+  end
 end
