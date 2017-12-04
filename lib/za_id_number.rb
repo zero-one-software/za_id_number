@@ -1,5 +1,6 @@
 require 'za_id_number/version'
 require 'luhn'
+require 'date'
 
 class ZAIDNumber
   REQUIRED_ID_LENGTH = 13
