@@ -17,30 +17,30 @@ class ZAIDNumber
   end
 
   def valid?
-    has_valid_length?      &&
-    has_only_digits?       &&
-    has_valid_date?        &&
-    has_valid_citizenship? &&
-    has_valid_checksum?
+    valid_length?      &&
+    only_digits?       &&
+    valid_date?        &&
+    valid_citizenship? &&
+    valid_checksum?
   end
 
-  def has_valid_checksum?
+  def valid_checksum?
     Luhn.valid? @id_number
   end
 
-  def has_valid_length?
+  def valid_length?
     @id_number.length == REQUIRED_ID_LENGTH
   end
 
-  def has_only_digits?
+  def only_digits?
     @id_number.to_s.gsub(/\D*/, '') == @id_number.to_s
   end
 
-  def has_valid_date?
+  def valid_date?
     date_of_birth ? true : false
   end
 
-  def has_valid_citizenship?
+  def valid_citizenship?
     CITIZENSHIP_RANGE.include? @id_number[10].to_i
   end
 
