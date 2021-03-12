@@ -13,38 +13,38 @@ describe ZAIDNumber do
 
   context "validation checks" do
     it "should only allow 13 character long id numbers" do
-      expect(subject).to have_valid_length
+      expect(subject).to be_valid_length
 
-      expect(described_class.new("12345678901234")).to_not have_valid_length
-      expect(described_class.new("123456789012")).to_not   have_valid_length
+      expect(described_class.new("12345678901234")).to_not be_valid_length
+      expect(described_class.new("123456789012")).to_not   be_valid_length
     end
 
     it "should only allow digits" do
-      expect(subject).to                                     have_only_digits
-      expect(described_class.new("a#{valid_za_id}a")).to_not have_only_digits
+      expect(subject).to                                     be_only_digits
+      expect(described_class.new("a#{valid_za_id}a")).to_not be_only_digits
     end
 
     it "should only allow ID numbers with valid dates" do
-      expect(subject).to                                  have_valid_date
-      expect(described_class.new("7513331234083")).to_not have_valid_date
+      expect(subject).to                                  be_valid_date
+      expect(described_class.new("7513331234083")).to_not be_valid_date
     end
 
     it "should only allow valid citizenship values" do
-      expect(subject).to                                  have_valid_citizenship
-      expect(described_class.new("7501151234283")).to_not have_valid_citizenship
+      expect(subject).to                                  be_valid_citizenship
+      expect(described_class.new("7501151234283")).to_not be_valid_citizenship
     end
 
     it "should detect valid ZA ID number checksums" do
-      expect(subject).to have_valid_checksum
+      expect(subject).to be_valid_checksum
     end
 
     it "should detect valid number checksums starting with 0" do
       num = "0001011234083"
-      expect(described_class.new(num)).to have_valid_checksum
+      expect(described_class.new(num)).to be_valid_checksum
     end
 
     it "should detect invalid ZA ID number checksums" do
-      expect(described_class.new(invalid_za_id)).to_not have_valid_checksum
+      expect(described_class.new(invalid_za_id)).to_not be_valid_checksum
     end
 
     it "should ensure ID numbers are only 13 digit numbers with completely valid data embedded" do
