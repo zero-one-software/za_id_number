@@ -52,11 +52,11 @@ id_number = ZAIDNumber.new('7501151234085') # => #<ZAIDNumber:0x00d40 @id_number
 ### Validation checks
 
 ```ruby
-id_num.has_valid_length?      # => true
-id_num.has_only_digits?       # => true
-id_num.has_valid_date?        # => true
-id_num.has_valid_citizenship? # => true
-id_num.has_valid_checksum?    # => true
+id_num.valid_length?      # => true
+id_num.only_digits?       # => true
+id_num.valid_date?        # => true
+id_num.valid_citizenship? # => true
+id_num.valid_checksum?    # => true
 ```
 
 Or, roll up all those validation checks into one call:
