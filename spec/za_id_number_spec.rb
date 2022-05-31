@@ -11,6 +11,11 @@ describe ZAIDNumber do
     expect(ZAIDNumber::Version::VERSION).not_to be nil
   end
 
+  it "responds to to_s" do
+    expect(subject).to respond_to :to_s
+    expect(subject.to_s).to eq valid_za_id
+  end
+
   it "is comparable" do
     expect(subject).to eq subject
     expect(subject).to eq described_class.new(valid_za_id)
