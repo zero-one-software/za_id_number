@@ -11,6 +11,7 @@ class ZAIDNumber
   PERMANENT_RESIDENT = 1
 
   attr_reader :id_number
+  alias to_s id_number
 
   def initialize(id_num)
     @id_number = id_num.to_s
