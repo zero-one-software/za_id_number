@@ -11,6 +11,12 @@ describe ZAIDNumber do
     expect(ZAIDNumber::Version::VERSION).not_to be nil
   end
 
+  it "is comparable" do
+    expect(subject).to eq subject
+    expect(subject).to eq described_class.new(valid_za_id)
+    expect(subject).to_not eq described_class.new(invalid_za_id)
+  end
+
   context "validation checks" do
     it "should only allow 13 character long id numbers" do
       expect(subject).to be_valid_length
