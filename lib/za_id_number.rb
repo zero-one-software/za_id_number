@@ -82,4 +82,8 @@ class ZAIDNumber
     return id_number == other.id_number
   end
   alias eql? ==
+
+  def hash
+    id_number.hash
+  end
 end

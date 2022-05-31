@@ -17,6 +17,13 @@ describe ZAIDNumber do
     expect(subject).to_not eq described_class.new(invalid_za_id)
   end
 
+  it "can be used as a hash key" do
+    hash = { subject => 'asdf' }
+    expect(hash[subject]).to eq 'asdf'
+    expect(hash[described_class.new(valid_za_id)]).to eq 'asdf'
+    expect(hash[described_class.new(invalid_za_id)]).to be_nil
+  end
+
   context "validation checks" do
     it "should only allow 13 character long id numbers" do
       expect(subject).to be_valid_length
