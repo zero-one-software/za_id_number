@@ -11,6 +11,24 @@ describe ZAIDNumber do
     expect(ZAIDNumber::Version::VERSION).not_to be nil
   end
 
+  it "responds to to_s" do
+    expect(subject).to respond_to :to_s
+    expect(subject.to_s).to eq valid_za_id
+  end
+
+  it "is comparable" do
+    expect(subject).to eq subject
+    expect(subject).to eq described_class.new(valid_za_id)
+    expect(subject).to_not eq described_class.new(invalid_za_id)
+  end
+
+  it "can be used as a hash key" do
+    hash = { subject => 'asdf' }
+    expect(hash[subject]).to eq 'asdf'
+    expect(hash[described_class.new(valid_za_id)]).to eq 'asdf'
+    expect(hash[described_class.new(invalid_za_id)]).to be_nil
+  end
+
   context "validation checks" do
     it "should only allow 13 character long id numbers" do
       expect(subject).to be_valid_length

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'za_id_number/version'
 require 'luhn'
 require 'date'
@@ -11,9 +13,10 @@ class ZAIDNumber
   PERMANENT_RESIDENT = 1
 
   attr_reader :id_number
+  alias to_s id_number
 
   def initialize(id_num)
-    @id_number = id_num.to_s
+    @id_number = id_num.to_s.freeze
   end
 
   def valid?
@@ -72,5 +75,16 @@ class ZAIDNumber
 
   def permanent_resident?
     !za_citizen?
+  end
+
+  def ==(other)
+    return false unless other.is_a?(ZAIDNumber)
+
+    return id_number == other.id_number
+  end
+  alias eql? ==
+
+  def hash
+    id_number.hash
   end
 end
