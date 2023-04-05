@@ -49,7 +49,7 @@ describe ZAIDNumber do
 
     it "should only allow valid citizenship values" do
       expect(subject).to                                  be_valid_citizenship
-      expect(described_class.new("7501151234283")).to_not be_valid_citizenship
+      expect(described_class.new("7501151234383")).to_not be_valid_citizenship
     end
 
     it "should detect valid ZA ID number checksums" do
@@ -71,7 +71,7 @@ describe ZAIDNumber do
       expect(described_class.new("123456789015")).to_not  be_valid # all digits and has correct checksum, but too short
       expect(described_class.new("1234567A89012")).to_not be_valid # not all digits, but correct length
       expect(described_class.new("7513331234083")).to_not be_valid # all good, except date is bad.
-      expect(described_class.new("7501151234283")).to_not be_valid # all good, citizenship is bad
+      expect(described_class.new("7501151234383")).to_not be_valid # all good, citizenship is bad
       expect(described_class.new(invalid_za_id)).to_not   be_valid # all digits, and correct length, but bad checksum
     end
   end
@@ -100,6 +100,7 @@ describe ZAIDNumber do
   context "citizenship parsing" do
     let(:za_citizen)         { described_class.new 7501151234085.to_s }
     let(:permanent_resident) { described_class.new 7501151234184.to_s }
+    let(:refugee)            { described_class.new 7501151234283.to_s }
 
     it "should detect ZA citizens" do
       expect(za_citizen).to             be_za_citizen
@@ -109,6 +110,11 @@ describe ZAIDNumber do
     it "should detect permanent residents" do
       expect(permanent_resident).to             be_permanent_resident
       expect(permanent_resident.citizenship).to eq :permanent_resident
+    end
+
+    it "should detect refugees" do
+      expect(refugee).to             be_refugee
+      expect(refugee.citizenship).to eq :refugee
     end
   end
 end
