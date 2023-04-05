@@ -77,6 +77,7 @@ id_num.male?               # => false
 id_num.citizenship         # => :za_citizen
 id_num.za_citizen?         # => true
 id_num.permanent_resident? # => false
+id_num.refugee?            # => false
 ```
 
 Development
