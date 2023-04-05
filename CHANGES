@@ -9,6 +9,12 @@ and this project tries really hard to adhere to [Semantic Versioning](https://se
 
 Nothing
 
+## [2.2.0] - 2023-04-05
+
+### Added
+
+- Support for [ID numbers where the citizen is a refugee.](https://www.oecd.org/tax/automatic-exchange/crs-implementation-and-assistance/tax-identification-numbers/South-Africa-TIN.pdf)
+
 ## [2.1.0] - 2022-05-31
 
 ### Added
@@ -17,9 +23,3 @@ Nothing
 - Add equality operator `==` and `eql?` method
 - Add `hash` method
 - Make id number instances immutable
-
-## [2.2.0] - 2023-04-05
-
-### Added
-
-- Support for [ID numbers where the citizen is a refugee.](https://www.oecd.org/tax/automatic-exchange/crs-implementation-and-assistance/tax-identification-numbers/South-Africa-TIN.pdf)
