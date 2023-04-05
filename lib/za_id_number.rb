@@ -8,9 +8,10 @@ class ZAIDNumber
   REQUIRED_ID_LENGTH = 13
   FEMALE_RANGE       = (0..4999)
   MALE_RANGE         = (5000..9999)
-  CITIZENSHIP_RANGE  = (0..1)
+  CITIZENSHIP_RANGE  = (0..2)
   ZA_CITIZEN         = 0
   PERMANENT_RESIDENT = 1
+  REFUGEE            = 2
 
   attr_reader :id_number
   alias to_s id_number
@@ -44,7 +45,7 @@ class ZAIDNumber
   end
 
   def valid_citizenship?
-    CITIZENSHIP_RANGE.include? @id_number[10].to_i
+    CITIZENSHIP_RANGE.include? citizenship_status
   end
 
   def date_of_birth
@@ -66,15 +67,23 @@ class ZAIDNumber
   end
 
   def citizenship
-    za_citizen? ? :za_citizen : :permanent_resident
+    case citizenship_status
+    when ZA_CITIZEN         then :za_citizen
+    when PERMANENT_RESIDENT then :permanent_resident
+    when REFUGEE            then :refugee
+    end
   end
 
   def za_citizen?
-    @id_number[10].to_i == ZA_CITIZEN
+    citizenship_status == ZA_CITIZEN
   end
 
   def permanent_resident?
     !za_citizen?
+  end
+
+  def refugee?
+    citizenship_status == REFUGEE
   end
 
   def ==(other)
@@ -86,5 +95,11 @@ class ZAIDNumber
 
   def hash
     id_number.hash
+  end
+
+  private
+
+  def citizenship_status
+    @id_number[10].to_i
   end
 end
